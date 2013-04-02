@@ -32,7 +32,7 @@ I've submitted a pull request to PyBitmessage that adds an option to the right-c
 
 To apply the patch:
 
-Download/copy forcehtml_context_menu.patch to the PyBitmessage directory and run:
+Download/copy [forcehtml_context_menu.patch](https://raw.github.com/delicatebits/walrus/master/forcehtml_context_menu.patch) to the PyBitmessage directory and run:
 
 `git apply forcehtml_context_menu.patch`
 
