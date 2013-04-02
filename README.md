@@ -74,6 +74,13 @@ Walrus has been tested on Ubuntu. It should work just as well on OSX and Windows
 
 If you've found a problem with [PyBitmessage](Bitmessage/PyBitmessage), please open an issue on their Github issue tracker
 
+news
+----
+
+I've created an address to broadcast news about walrus
+
+Add `BM-BbZhmd6xAZHMPktvZ83122e9Y9XpxJpA` to your Subscriptions today
+
 contribute
 ----------
 
