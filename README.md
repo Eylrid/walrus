@@ -26,13 +26,17 @@ Walrus, by default, assumes you want to share images with the Image Board mailin
 patches
 -------
 
+**Note**:
+
+`forcehtml_context_menu.patch` has been incorporated into PyBitmessage, you should update that instead of applying this patch.
+
 Currently, PyBitmessage doesn't allow mailing list messages to be displayed as richtext, because there's nothing stopping someone from submitting objectionable images to mailing lists. I agree with that, with the exception that I think there should be a manual way of viewing messages as richtext.
 
 I've submitted a pull request to PyBitmessage that adds an option to the right-click menu in the inbox that does just that. I don't know if it will be accepted, though. So, I've included in this repo a patch you can apply yourself
 
 To apply the patch:
 
-Download/copy [forcehtml_context_menu.patch](https://raw.github.com/delicatebits/walrus/master/forcehtml_context_menu.patch) to the PyBitmessage directory and run:
+Download/copy forcehtml_context_menu.patch to the PyBitmessage directory and run:
 
 `git apply forcehtml_context_menu.patch`
 
