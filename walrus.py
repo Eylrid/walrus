@@ -15,6 +15,8 @@ import xmlrpclib
 import json
 import imghdr
 
+walrusVer = '0.1a'
+
 # Q: What do I put here?
 # A: The values you used when following https://bitmessage.org/wiki/API_Reference
 #    For more information see README.md OR https://github.com/delicatebits/walrus
@@ -160,7 +162,7 @@ class BitmessageApiClient():
 def main():
     global defaultRecipient
     parser = OptionParser(usage="usage: %prog filename [options]",
-                          version="%prog 0.1")
+                          version="%prog "+walrusVer)
     parser.add_option("-s", "--send", action="store_true", dest="flag_send",
                       default=False, help="Send output to Address")
     parser.add_option("-f", "--from", action="store", dest="flag_from", metavar='FROM',
@@ -225,12 +227,11 @@ def main():
         return
     
     message = """<html>
-<!-- This message was sent via a script using the API. -->
-<!-- PyBitmessage was updated on Mar 29, 2013 to not display richtext messages -->
-<!--    when the sender isn't in either Address Book or Subscriptions -->
-<!--    If you haven't already, you should update PyBitMessage Now. -->
-<!--    https://github.com/Bitmessage/PyBitmessage/ -->
-<!-- This script can be found at: https://github.com/delicatebits/walrus -->
+<!-- This message was sent via walrus v.%s -->
+<!-- You can view richtext messages by right-clicking -->
+<!--    the inbox item and choosing "View as Richtext" -->
+<!--    If you've updated PyBitmessage since April 2, 2013 -->
+<!-- Walrus can be found at: https://delicatebits.github.com/walrus -->
 <style type="text/css"> 
     #header { font-size: 12px; color: #555; } 
     #image { max-width: 999px; max-height: 300px; }
@@ -243,7 +244,7 @@ def main():
         <img src='data:image/%s;base64, %s' />
     </div>
 </center>
-</html>""" % (getDateTimeString(), filetype, encoded)
+</html>""" % (walrusVer, getDateTimeString(), filetype, encoded)
         
     if options.flag_subject != False:
         subject = options.flag_subject
