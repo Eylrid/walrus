@@ -32,7 +32,7 @@ Unless explicitly stated, they're released under the MIT license. *Use them at y
 
 **How to apply a patch**:
 
-Download/copy the .patch file to your PyBitmessage folder and run 'git apply [patch]'
+Download/copy the .patch file to your PyBitmessage folder and run `git apply [patch]`
 
 usage
 -----
