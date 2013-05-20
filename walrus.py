@@ -190,6 +190,8 @@ def main():
                           version="%prog "+walrusVer)
     parser.add_option("-s", "--send", action="store_true", dest="flag_send",
                       default=False, help="Send output to Address")
+    parser.add_option("-d", "--save", action="store", dest="flag_save",
+                      default=False, help="Path to save message to disk")
     parser.add_option("-f", "--from", action="store", dest="flag_from", metavar='FROM',
                       default=False, help="Address/Label to send from")
     parser.add_option("-t", "--to", action="store", dest="flag_to", metavar='TO',
@@ -220,6 +222,20 @@ def main():
     api = None
 
     message = create_message(filetype, encoded)
+
+    if options.flag_save != False:
+        save = True
+        if os.path.isfile(options.flag_save):
+            #file already exists
+            print '%s already exists.' %options.flag_save
+            userinput = raw_input('Overwrite?')
+            if 'yes' not in userinput and 'y' not in userinput:
+                save = False
+
+        if save:
+            with open(options.flag_save, 'w') as file:
+                file.write(message)
+            print 'Saved to %s' %options.flag_save
 
     if not options.flag_send:
         print 'Message:\n%s' % message
