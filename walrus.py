@@ -1,7 +1,7 @@
 #!/usr/bin/env python2.7
 # Distributed under the MIT software license. See
 # http://delicatebits.mit-license.org
-# 
+#
 # --------------------------------------------------------------------
 # Project hosted at https://github.com/delicatebits/walrus
 # --------------------------------------------------------------------
@@ -75,10 +75,10 @@ class BitmessageApiClient():
         if len(userinput) > 0: label = userinput
         self.identity = self.api.createRandomAddress(label.encode('base64'),ripe18)
         print self.identity
-        
+
     def isReady(self):
         return self.ready
-    
+
     def lookupBitmessageDataFolder(self):
         from os import path, environ
         if sys.platform == 'darwin':
@@ -92,7 +92,7 @@ class BitmessageApiClient():
         else:
             bitmessagedata = path.expanduser(path.join("~", ".PyBitmessage/"))
         return bitmessagedata
-    
+
     def getCredentialsFromKeysFile(self):
         if bitmsgpath != '':
             bitmessagedata = bitmsgpath
@@ -107,13 +107,13 @@ class BitmessageApiClient():
             api_host = config.get('bitmessagesettings', 'apiinterface')
             api_port = config.get('bitmessagesettings', 'apiport')
         except:
-            print 'Walrus was unable to read %s' % (bitmessagedata + 'keys.dat') 
+            print 'Walrus was unable to read %s' % (bitmessagedata + 'keys.dat')
             return False
         return True
-    
+
     def getIdentityAddress(self):
         return self.identity['address']
-    
+
     def identityIsSet(self):
         if self.identity != False:
             return True
@@ -153,7 +153,7 @@ class BitmessageApiClient():
         return False
 
     def sendMessage(self,toAddress,subject,message):
-        if not self.ready or not self.identity: 
+        if not self.ready or not self.identity:
             print 'Unable to send message.'
             return False
         self.api.sendMessage(toAddress, self.identity['address'], subject, message)
@@ -195,7 +195,7 @@ def main():
 
     encoded = encode(file_path)
     api = None
-    
+
     if not options.flag_send:
         print 'Base64 Encoded Image:\n%s' % encoded
         return
@@ -204,14 +204,14 @@ def main():
     if not apiClient.isReady():
         print 'There was an error with the API. Please check your credentials, and make sure you have at least 1 Identity'
         return
-    
+
     if options.flag_from != False:
         if not apiClient.checkFromIdentity(options.flag_from,'from'):
             print 'Invalid From Address/Label provided.'
     if not apiClient.identityIsSet():
         if not apiClient.getIdentity():
             return
-        
+
     if options.flag_to != defaultRecipient:
         print 'To Addresses/Labels are not validated, yet'
         userinput = raw_input('Are you sure you want to send a message to %s [y/N]: ' % options.flag_to).lower()
@@ -220,20 +220,20 @@ def main():
             exit(0)
         else:
             defaultRecipient = options.flag_to
-    
+
     print 'Attempting to generate and send message'
     if not apiClient.isReady() or not apiClient.identityIsSet():
         print 'Something went wrong with the API, exiting.'
         return
-    
+
     message = """<html>
 <!-- This message was sent via walrus v.%s -->
 <!-- You can view richtext messages by right-clicking -->
 <!--    the inbox item and choosing "View as Richtext" -->
 <!--    If you've updated PyBitmessage since April 2, 2013 -->
 <!-- Walrus can be found at: https://delicatebits.github.com/walrus -->
-<style type="text/css"> 
-    #header { font-size: 12px; color: #555; } 
+<style type="text/css">
+    #header { font-size: 12px; color: #555; }
     #image { max-width: 999px; max-height: 300px; }
 </style>
 <center>
@@ -245,12 +245,12 @@ def main():
     </div>
 </center>
 </html>""" % (walrusVer, getDateTimeString(), filetype, encoded)
-        
+
     if options.flag_subject != False:
         subject = options.flag_subject
-    else: 
+    else:
         subject = file_name
-    
+
     apiClient.sendMessage(defaultRecipient, subject.encode('base64'), message.encode('base64'))
     print 'Operations Complete! exiting.'
 
