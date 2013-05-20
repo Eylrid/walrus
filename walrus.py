@@ -3,7 +3,7 @@
 # http://delicatebits.mit-license.org
 #
 # --------------------------------------------------------------------
-# Project hosted at https://github.com/delicatebits/walrus
+# Project hosted at https://github.com/Eylrid/walrus
 # --------------------------------------------------------------------
 
 import sys
