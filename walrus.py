@@ -16,7 +16,7 @@ import json
 import imghdr
 import os
 
-walrusVer = '0.1a'
+walrusVer = '0.2'
 
 # Q: What do I put here?
 # A: The values you used when following https://bitmessage.org/wiki/API_Reference
