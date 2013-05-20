@@ -14,6 +14,7 @@ import datetime
 import xmlrpclib
 import json
 import imghdr
+import os
 
 walrusVer = '0.1a'
 
@@ -180,9 +181,7 @@ def main():
         print 'Error: Path to image must be provided'
         return
 
-    try:
-        with open(file_path): pass
-    except IOError:
+    if not os.path.isfile(file_path):
         print '%s was not found on your filesystem!' % file_path
         return
 
