@@ -161,6 +161,13 @@ class BitmessageApiClient():
         self.api.sendMessage(toAddress, self.identity['address'], subject, message)
         print 'Message sent to %s!' % defaultRecipient
 
+    def sendBroadcast(self,subject,message):
+        if not self.ready or not self.identity:
+            print 'Unable to broadcast message.'
+            return False
+        self.api.sendBroadcast(self.identity['address'], subject, message)
+        print 'Message broadcast!'
+
 def create_message(filetype, encoded):
     message = """<html>
 <!-- This message was sent via walrus v.%s -->
@@ -190,6 +197,8 @@ def main():
                           version="%prog "+walrusVer)
     parser.add_option("-s", "--send", action="store_true", dest="flag_send",
                       default=False, help="Send output to Address")
+    parser.add_option("-b", "--broadcast", action="store_true", dest="flag_broadcast",
+                      default=False, help="Broadcast output")
     parser.add_option("-d", "--save", action="store", dest="flag_save",
                       default=False, help="Path to save message to disk")
     parser.add_option("-f", "--from", action="store", dest="flag_from", metavar='FROM',
@@ -237,7 +246,11 @@ def main():
                 file.write(message)
             print 'Saved to %s' %options.flag_save
 
-    if not options.flag_send:
+    if options.flag_send and options.flag_broadcast:
+        print 'Both send and broadcast chosen. Broadcasting only.'
+        options.flag_send = False
+
+    if not (options.flag_send or options.flag_broadcast):
         print 'Message:\n%s' % message
         return
 
@@ -253,14 +266,15 @@ def main():
         if not apiClient.getIdentity():
             return
 
-    if options.flag_to != defaultRecipient:
-        print 'To Addresses/Labels are not validated, yet'
-        userinput = raw_input('Are you sure you want to send a message to %s [y/N]: ' % options.flag_to).lower()
-        if 'yes' not in userinput and 'y' not in userinput:
-            print 'Exiting'
-            exit(0)
-        else:
-            defaultRecipient = options.flag_to
+    if options.flag_send:
+        if options.flag_to != defaultRecipient:
+            print 'To Addresses/Labels are not validated, yet'
+            userinput = raw_input('Are you sure you want to send a message to %s [y/N]: ' % options.flag_to).lower()
+            if 'yes' not in userinput and 'y' not in userinput:
+                print 'Exiting'
+                exit(0)
+            else:
+                defaultRecipient = options.flag_to
 
     print 'Attempting to generate and send message'
     if not apiClient.isReady() or not apiClient.identityIsSet():
@@ -272,7 +286,13 @@ def main():
     else:
         subject = file_name
 
-    apiClient.sendMessage(defaultRecipient, subject.encode('base64'), message.encode('base64'))
+    assert options.flag_broadcast or options.flag_send
+
+    if options.flag_broadcast:
+        apiClient.sendBroadcast(subject.encode('base64'), message.encode('base64'))
+    else:
+        apiClient.sendMessage(defaultRecipient, subject.encode('base64'), message.encode('base64'))
+
     print 'Operations Complete! exiting.'
 
 if __name__ == '__main__':
