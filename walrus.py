@@ -161,6 +161,29 @@ class BitmessageApiClient():
         self.api.sendMessage(toAddress, self.identity['address'], subject, message)
         print 'Message sent to %s!' % defaultRecipient
 
+def create_message(filetype, encoded):
+    message = """<html>
+<!-- This message was sent via walrus v.%s -->
+<!-- You can view richtext messages by right-clicking -->
+<!--    the inbox item and choosing "View as Richtext" -->
+<!--    If you've updated PyBitmessage since April 2, 2013 -->
+<!-- Walrus can be found at: https://delicatebits.github.com/walrus -->
+<style type="text/css">
+    #header { font-size: 12px; color: #555; }
+    #image { max-width: 999px; max-height: 300px; }
+</style>
+<center>
+    <div id="header">
+        <p>Sent on %s</p>
+    </div>
+    <div id="image">
+        <img src='data:image/%s;base64, %s' />
+    </div>
+</center>
+</html>""" % (walrusVer, getDateTimeString(), filetype, encoded)
+
+    return message
+
 def main():
     global defaultRecipient
     parser = OptionParser(usage="usage: %prog filename [options]",
@@ -226,25 +249,7 @@ def main():
         print 'Something went wrong with the API, exiting.'
         return
 
-    message = """<html>
-<!-- This message was sent via walrus v.%s -->
-<!-- You can view richtext messages by right-clicking -->
-<!--    the inbox item and choosing "View as Richtext" -->
-<!--    If you've updated PyBitmessage since April 2, 2013 -->
-<!-- Walrus can be found at: https://delicatebits.github.com/walrus -->
-<style type="text/css">
-    #header { font-size: 12px; color: #555; }
-    #image { max-width: 999px; max-height: 300px; }
-</style>
-<center>
-    <div id="header">
-        <p>Sent on %s</p>
-    </div>
-    <div id="image">
-        <img src='data:image/%s;base64, %s' />
-    </div>
-</center>
-</html>""" % (walrusVer, getDateTimeString(), filetype, encoded)
+    message = create_message(filetype, encoded)
 
     if options.flag_subject != False:
         subject = options.flag_subject
