@@ -219,8 +219,10 @@ def main():
     encoded = encode(file_path)
     api = None
 
+    message = create_message(filetype, encoded)
+
     if not options.flag_send:
-        print 'Base64 Encoded Image:\n%s' % encoded
+        print 'Message:\n%s' % message
         return
 
     apiClient = BitmessageApiClient()
@@ -248,8 +250,6 @@ def main():
     if not apiClient.isReady() or not apiClient.identityIsSet():
         print 'Something went wrong with the API, exiting.'
         return
-
-    message = create_message(filetype, encoded)
 
     if options.flag_subject != False:
         subject = options.flag_subject
