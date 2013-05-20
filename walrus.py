@@ -27,7 +27,7 @@ api_pass = ''
 api_host = ''
 api_port = ''
 
-defaultRecipient = 'BM-BbbuVnYuaSY6yjyhfQm5KVrJLqjiyetB'
+defaultRecipient = 'BM-2DAvCwKBR5F2Y5edkbQvpzQuLJdSVNDyUz'
 
 def getDateTimeString():
     return '%s UTC' % (datetime.datetime.utcnow().strftime('%A, %B %d, %H:%M'))
