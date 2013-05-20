@@ -100,7 +100,8 @@ class BitmessageApiClient():
         else:
             bitmessagedata = self.lookupBitmessageDataFolder()
         config = ConfigParser.SafeConfigParser()
-        config.read(bitmessagedata + 'keys.dat')
+        key_path = os.path.join(bitmessagedata, 'keys.dat')
+        config.read(key_path)
         try:
             global api_user,api_pass,api_host,api_port
             api_user = config.get('bitmessagesettings', 'apiusername')
