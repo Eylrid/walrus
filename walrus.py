@@ -174,7 +174,7 @@ def create_message(filetype, encoded):
 <!-- You can view richtext messages by right-clicking -->
 <!--    the inbox item and choosing "View as Richtext" -->
 <!--    If you've updated PyBitmessage since April 2, 2013 -->
-<!-- Walrus can be found at: https://delicatebits.github.com/walrus -->
+<!-- Walrus can be found at: https://github.com/Eylrid/walrus -->
 <style type="text/css">
     #header { font-size: 12px; color: #555; }
     #image { max-width: 999px; max-height: 300px; }
