@@ -124,9 +124,8 @@ class BitmessageApiClient():
     def getIdentity(self):
         if not self.ready: return False
         idcnt = 0;
-        for x in self.addresses:
-            if x['enabled'] != True:
-                continue;
+        addresses = [a for a in self.addresses if a['enabled']==True]
+        for x in addresses:
             print "[ID: %s]\tAddress: %s\tLabel: %s" % (idcnt,x['address'],x['label'])
             idcnt += 1
         userinput = raw_input('Choose an ID: ')
@@ -135,10 +134,10 @@ class BitmessageApiClient():
         except ValueError:
             print '%s is an invalid choice.' % userinput
             return False
-        if len(self.addresses)-1 < i:
+        if len(addresses)-1 < i:
             print '%s is an invalid choice.' % i
             return False
-        self.identity = self.addresses[int(userinput)]
+        self.identity = addresses[int(userinput)]
         print 'Message will be sent as %s, %s' % (self.identity['label'],self.identity['address'])
         return True
 
