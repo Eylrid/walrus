@@ -259,7 +259,7 @@ def main():
         return
 
     if options.flag_from != False:
-        if not apiClient.checkFromIdentity(options.flag_from,'from'):
+        if not apiClient.checkFromIdentity(options.flag_from):
             print 'Invalid From Address/Label provided.'
     if not apiClient.identityIsSet():
         if not apiClient.getIdentity():
